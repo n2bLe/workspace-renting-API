@@ -2,7 +2,7 @@ import User from '../models/User';
 
 export const updateUser = async (req,res,next)=>{
     try{
-        const updatedUser = User.findByIdAndUpdate(req.body.id,{ $set:req.body});
+        const updatedUser = await User.findByIdAndUpdate(req.body.id,{ $set:req.body});
         res.status(204).send(updateUser);
     }catch(err){
         throw err;

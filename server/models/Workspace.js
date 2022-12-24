@@ -8,19 +8,28 @@ const WorkspaceSchema = mongoose.Schema({
     address:{
         type:String,
         required:true},
+
     type:{
         type:[String],
         required:true},
+
     desc:{
         type:String,
         required:true},
+
+    features :{
+        type:[String]
+    },
+
     access :{
         type:String,
         required:true
     },
+
     featured:{
         type:Boolean,
         required:true},
+
     unavailableDates :{
         type:[Date],
         required:true},

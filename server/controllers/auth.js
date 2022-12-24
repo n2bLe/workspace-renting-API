@@ -24,7 +24,7 @@ export const register = async (req,res,next)=>{
 
 export const login = async (req,res,next)=>{
     try{
-        const user = User.find({fullname : req.body.fullname});
+        const user = await User.find({fullname : req.body.fullname});
         if(!user) return next();
 
         const isPasswordCorrect = bcrypt.compare(req.body.password,user.password);
