@@ -1,10 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
 import bodyParser from 'body-parser'
 import cors from 'cors';
 import usersRoutes from './routes/users.js'
 import workspacesRoutes from './routes/workspaces.js';
+import authRoutes from './routes/auth.js';
 
 
 dotenv.config();
@@ -19,9 +21,9 @@ app.use(bodyParser.json());
 app.use(cors())
 
 
-
+app.use('/api/auth',authRoutes)
 app.use('/api/users',usersRoutes)
-app.use('/api/workspaces',workspacesRoutes);
+app.use('/api/ws',workspacesRoutes);
 
 
 const connect = async ()=> {
@@ -33,7 +35,7 @@ const connect = async ()=> {
     }
 }
 
-
+mongoose.set("strictQuery", false);
 mongoose.connection.on('disconnected',()=>{
     console.log("Mongodb Disconnected");
 })

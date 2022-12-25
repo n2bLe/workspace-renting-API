@@ -1,6 +1,6 @@
 import express from 'express';
-import { verifyAdmin } from '../utils/verifyToken';
-import { createWorkspace, updateWorkspace, deleteWorkspace, getWorkspaces } from '../controllers/workspace.js';
+import { verifyAdmin } from '../utils/verifyToken.js';
+import { createWorkspace, updateWorkspace, deleteWorkspace, getWorkspaces, getWorkspace } from '../controllers/workspace.js';
 
 const router = express.Router();
 

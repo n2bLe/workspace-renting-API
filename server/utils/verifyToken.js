@@ -2,57 +2,38 @@ import jwt from 'jsonwebtoken';
 
 
 
-const secret = process.env.JWT;
+export const verifyUser = (req,res,next)=>{
 
-
-export const verifyToken = (req,res,next)=>{
     const token = req.cookies.access_token;
 
     if(!token){
-        return next();
+        res.send("You are not authenticated.")
     }
-    jwt.verify(token,secret,(err,info)=>{
-        if(err) return next();
-        req.user = info;
+
+    const data = jwt.verify(token,process.env.JWT);
+    if(data.id === req.params.id || data.isAdmin){
         next();
-    })
+    }
+    else {
+        res.send("You are not a user.");
+    }
+
 }
+
 
 export const verifyAdmin = (req,res,next)=>{
-
     const token = req.cookies.access_token;
 
     if(!token){
-        return next();
+        res.send("You are not authenticated.")
     }
 
-    jwt.verify(token,secret,(err,info)=>{
-        if(err) return next();
-        if(info.id === req.query.id || info.isAdmin){
-            next();
-        }
-        else {
-            res.send("You are not a user.");
-        }
-    })
+    const data = jwt.verify(token,process.env.JWT)
 
-}
-
-
-export const verifyUser = (req,res,next)=>{
-    const token = req.cookies.access_token;
-
-    if(!token){
-        return next();
+    if(data.isAdmin){
+       next();
     }
-
-    jwt.verify(token,secret,(err,info)=>{
-        if(err) return next();
-        if(info.isAdmin){
-            next();
-        }
-        else {
-            res.send("You are not an admin")
-        }
-    })
+    else {
+        res.send("You are not an admin")
+    }
 }

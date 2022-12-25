@@ -1,12 +1,14 @@
-import User from '../models/User';
+import User from '../models/User.js';
 
 export const updateUser = async (req,res,next)=>{
     try{
-        const updatedUser = await User.findByIdAndUpdate(req.body.id,{ $set:req.body});
-        res.status(204).send(updateUser);
+        await User.findByIdAndUpdate(req.params.id,req.body);
+        const updated = await User.findById(req.params.id);
+        res.status(201).send(updated);
     }catch(err){
-        throw err;
+        next(err);
     }
+
 }
 
 
@@ -22,7 +24,8 @@ export const deleteUser = async (req,res,next)=>{
 
 export const getUser = async (req,res,next)=>{
     try{
-        const user = await  User.findById(req.params.id);
+        const user = await User.findById(req.params.id);
+        res.status(200).send(user);
     }catch(err){
         throw err;
     }

@@ -10,7 +10,7 @@ export const register = async (req,res,next)=>{
         const newUser = new User({
             fullname : req.body.fullname,
             email : req.body.email,
-            password: req.body.password,
+            password: hashedPassword,
             phone : req.body.phone
         });
         await newUser.save();
@@ -24,7 +24,7 @@ export const register = async (req,res,next)=>{
 
 export const login = async (req,res,next)=>{
     try{
-        const user = await User.find({fullname : req.body.fullname});
+        const user = await User.findOne({'email':req.body.email})
         if(!user) return next();
 
         const isPasswordCorrect = bcrypt.compare(req.body.password,user.password);

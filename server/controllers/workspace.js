@@ -20,14 +20,17 @@ export const createWorkspace = async (req,res,next)=>{
         if(req.body.photos != null){
             workspace.photos = req.body.photos;
         }
+        await workspace.save();
+        res.status(201).send(workspace)
     }catch(err){
         throw err;
     }
 }
 
 export const updateWorkspace = async (req,res,next)=>{
-    const updatedWorkspace = await Workspace.findByIdAndUpdate(req.params.id,{$set: req.body});
-    res.status(204).send(updateWorkspace);
+     await Workspace.findByIdAndUpdate(req.params.id,req.body);
+     const updated = await Workspace.findById(req.params.id);
+    res.status(201).send(updated);
 }
 
 

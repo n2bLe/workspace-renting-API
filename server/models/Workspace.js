@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const WorkspaceSchema = mongoose.Schema({
     city:{
@@ -41,7 +41,11 @@ const WorkspaceSchema = mongoose.Schema({
          type:Number,
          required:true}
 
-},
+},{writeConcern: {
+    w: 'majority',
+    j: true,
+    wtimeout: 1000
+  }},
 {timestamps:true})
 
 export default mongoose.model("Workspace",WorkspaceSchema);

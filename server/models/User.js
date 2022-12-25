@@ -1,4 +1,4 @@
-const  mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const UserSchema = mongoose.Schema({
     fullname: {
@@ -9,7 +9,7 @@ const UserSchema = mongoose.Schema({
         type:String,
         required:true},
 
-    passowrd:{
+    password:{
         type:String,
         required:true},
         
@@ -21,7 +21,11 @@ const UserSchema = mongoose.Schema({
         type:Boolean,
         default:false}
     
-},
+},{writeConcern: {
+    w: 'majority',
+    j: true,
+    wtimeout: 1000
+  }},
 {timestamps:true})
 
 
